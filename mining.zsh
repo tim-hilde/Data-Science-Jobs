@@ -1,8 +1,8 @@
 #!/bin/zsh
 
-datum= date +%d.%m.%Y
+DATUM=$(date +"%d.%m.%Y")
 git add .
-git commit -a -m datum
+git commit -a -m "$DATUM"
 
 # python3 "./scraping.py" 
 
