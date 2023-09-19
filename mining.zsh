@@ -2,7 +2,8 @@
 
 DATUM=$(date +"%d.%m.%Y")
 git add .
-git commit -a -m "$DATUM"
+git commit -a -m "$DATUM Scraping"
+git push
 
 # python3 "./scraping.py" 
 
