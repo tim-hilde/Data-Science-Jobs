@@ -65,8 +65,11 @@ def add_info(url):
 		for element in area:
 			texts[i] += element.text + "\n"
 	
-	if len(base) > 5:
-		print(len(base))
+	if (teilzeit_remote == "-") & (texts == ["", "", "", "", ""]):
+		errors = pd.read_pickle("../data/errors.pkl")
+		idx = len(errors)
+		errors.loc[idx] = link, str(soup_object)
+		errors.to_pickle("../data/errors.pkl")
 
 	return link, teilzeit_remote, texts[0], texts[1], texts[2], texts[3], texts[4]
 
