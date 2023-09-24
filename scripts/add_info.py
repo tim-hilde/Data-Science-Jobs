@@ -66,19 +66,25 @@ def add_info(url):
 			texts[i] += element.text + "\n"
 	
 	if (teilzeit_remote == "-") & (texts == ["", "", "", "", ""]):
-		errors = pd.read_pickle("../data/errors.pkl")
 		idx = len(errors)
 		errors.loc[idx] = link, str(soup_object)
-		errors.to_pickle("../data/errors.pkl")
 
 	return link, teilzeit_remote, texts[0], texts[1], texts[2], texts[3], texts[4]
 
 jobs = pd.read_pickle("../data/jobs.pkl")
+errors = pd.read_pickle("../data/errors.pkl")
 
-jobs1 = jobs[jobs["Teilzeit_Remote"].isna() == True]
-indexes = jobs1.index
-for i in indexes:
-	jobs.loc[i, ["Link", "Teilzeit_Remote", "Introduction", "Description", "Profile", "We_offer", "Contact"]] = add_info(jobs1.loc[i, "Link"])
-	jobs.to_pickle("../data/jobs.pkl")
+jobs_new = jobs[jobs["Teilzeit_Remote"].isna() == True]
+jobs_error = jobs[(jobs["Teilzeit_Remote"] == "-") & (jobs["Introduction"] == "")]
+
+entries = [jobs_new, jobs_error]
+
+for entry in entries:
+	indexes = entry.index
+	for i in indexes:
+		jobs.loc[i, ["Link", "Teilzeit_Remote", "Introduction", "Description", "Profile", "We_offer", "Contact"]] = add_info(entry.loc[i, "Link"])
+	errors = errors[0:0]
+
+jobs.to_pickle("../data/jobs.pkl")
+errors.to_pickle("../data/errors.pkl")
 driver.quit()
-# jobs
