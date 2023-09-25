@@ -9,4 +9,4 @@ cd $BASEDIR
 DATUM=$(date +"%d.%m.%Y")
 git add .
 git commit -a -m "$DATUM Scraping"
-git push
+git push > /dev/null 
