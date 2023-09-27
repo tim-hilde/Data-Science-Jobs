@@ -64,27 +64,25 @@ def add_info(url):
 		area = base[i].find_all(["p", "li"])
 		for element in area:
 			texts[i] += element.text + "\n"
-	
-	if (teilzeit_remote == "-") & (texts == ["", "", "", "", ""]):
-		idx = len(errors)
-		errors.loc[idx] = link, str(soup_object)
-		errors.to_pickle("../data/errors.pkl")
 
 	return link, teilzeit_remote, texts[0], texts[1], texts[2], texts[3], texts[4]
 
 jobs = pd.read_pickle("../data/jobs.pkl")
-errors = pd.read_pickle("../data/errors.pkl")
 
 jobs_new = jobs[jobs["Teilzeit_Remote"].isna() == True]
+
+index_new = jobs_new.index
+for i in index_new:
+	jobs.loc[i, ["Link", "Teilzeit_Remote", "Introduction", "Description", "Profile", "We_offer", "Contact"]] = add_info(jobs_new.loc[i, "Link"])
+
 jobs_error = jobs[(jobs["Teilzeit_Remote"] == "-") & (jobs["Introduction"] == "")]
 
-entries = [jobs_new, jobs_error]
+while len(jobs_error) > 0:
+	index_err = jobs_error.index
+	for i in index_err:
+			jobs.loc[i, ["Link", "Teilzeit_Remote", "Introduction", "Description", "Profile", "We_offer", "Contact"]] = add_info(jobs_error.loc[i, "Link"])
+	jobs_error = jobs[(jobs["Teilzeit_Remote"] == "-") & (jobs["Introduction"] == "")]
 
-for entry in entries:
-	indexes = entry.index
-	for i in indexes:
-		jobs.loc[i, ["Link", "Teilzeit_Remote", "Introduction", "Description", "Profile", "We_offer", "Contact"]] = add_info(entry.loc[i, "Link"])
-	errors = errors[0:0]
 
 jobs.to_pickle("../data/jobs.pkl")
 driver.quit()
