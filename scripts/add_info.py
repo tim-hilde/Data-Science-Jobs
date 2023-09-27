@@ -68,6 +68,7 @@ def add_info(url):
 	if (teilzeit_remote == "-") & (texts == ["", "", "", "", ""]):
 		idx = len(errors)
 		errors.loc[idx] = link, str(soup_object)
+		errors.to_pickle("../data/errors.pkl")
 
 	return link, teilzeit_remote, texts[0], texts[1], texts[2], texts[3], texts[4]
 
@@ -86,5 +87,4 @@ for entry in entries:
 	errors = errors[0:0]
 
 jobs.to_pickle("../data/jobs.pkl")
-errors.to_pickle("../data/errors.pkl")
 driver.quit()
