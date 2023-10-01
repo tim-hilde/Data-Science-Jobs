@@ -70,19 +70,20 @@ def add_info(url):
 jobs = pd.read_pickle("../data/jobs.pkl")
 
 jobs_new = jobs[jobs["Teilzeit_Remote"].isna() == True]
-
 index_new = jobs_new.index
 for i in index_new:
 	jobs.loc[i, ["Link", "Teilzeit_Remote", "Introduction", "Description", "Profile", "We_offer", "Contact"]] = add_info(jobs_new.loc[i, "Link"])
+	jobs.to_pickle("../data/jobs.pkl")
 
 jobs_error = jobs[(jobs["Teilzeit_Remote"] == "-") & (jobs["Introduction"] == "")]
 
-while len(jobs_error) > 0:
+round = 0
+while len(jobs_error) > 0 and round < 3:
 	index_err = jobs_error.index
 	for i in index_err:
 			jobs.loc[i, ["Link", "Teilzeit_Remote", "Introduction", "Description", "Profile", "We_offer", "Contact"]] = add_info(jobs_error.loc[i, "Link"])
 	jobs_error = jobs[(jobs["Teilzeit_Remote"] == "-") & (jobs["Introduction"] == "")]
+	jobs.to_pickle("../data/jobs.pkl")
+	round +=1
 
-
-jobs.to_pickle("../data/jobs.pkl")
 driver.quit()
