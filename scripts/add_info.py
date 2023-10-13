@@ -9,9 +9,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 # Konfigurieren des Firefox-Browsers
 options = FirefoxOptions()
 options.add_argument("--headless")
-driver = webdriver.Firefox(options=options)
-# driver = webdriver.Firefox()
-first = True
+
 
 # Funktion zum Hinzufügen von Informationen zu einem Job-Link
 def add_info(url):
@@ -108,27 +106,11 @@ jobs = pd.read_pickle("../data/jobs.pkl")
 
 jobs_new = jobs[jobs["Teilzeit_Remote"].isna()]
 index_new = jobs_new.index
-for i in index_new:
-    jobs.loc[
-        i,
-        [
-            "Link",
-            "Teilzeit_Remote",
-            "Introduction",
-            "Description",
-            "Profile",
-            "We_offer",
-            "Contact",
-        ],
-    ] = add_info(jobs_new.loc[i, "Link"])
-    jobs.to_pickle("../data/jobs.pkl")
 
-jobs_error = jobs[(jobs["Teilzeit_Remote"] == "-") & (jobs["Introduction"] == "")]
+with webdriver.Firefox(options=options) as driver:
 
-round = 0
-while len(jobs_error) > 0 and round < 3:
-    index_err = jobs_error.index
-    for i in index_err:
+    first = True
+    for i in index_new:
         jobs.loc[
             i,
             [
@@ -140,9 +122,27 @@ while len(jobs_error) > 0 and round < 3:
                 "We_offer",
                 "Contact",
             ],
-        ] = add_info(jobs_error.loc[i, "Link"])
-    jobs_error = jobs[(jobs["Teilzeit_Remote"] == "-") & (jobs["Introduction"] == "")]
-    jobs.to_pickle("../data/jobs.pkl")
-    round += 1
+        ] = add_info(jobs_new.loc[i, "Link"])
+        jobs.to_pickle("../data/jobs.pkl")
 
-driver.quit()
+    jobs_error = jobs[(jobs["Teilzeit_Remote"] == "-") & (jobs["Introduction"] == "")]
+
+    round = 0
+    while len(jobs_error) > 0 and round < 3:
+        index_err = jobs_error.index
+        for i in index_err:
+            jobs.loc[
+                i,
+                [
+                    "Link",
+                    "Teilzeit_Remote",
+                    "Introduction",
+                    "Description",
+                    "Profile",
+                    "We_offer",
+                    "Contact",
+                ],
+            ] = add_info(jobs_error.loc[i, "Link"])
+        jobs_error = jobs[(jobs["Teilzeit_Remote"] == "-") & (jobs["Introduction"] == "")]
+        jobs.to_pickle("../data/jobs.pkl")
+        round += 1
