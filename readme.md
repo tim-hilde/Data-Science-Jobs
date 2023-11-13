@@ -7,4 +7,4 @@ Die Daten wurden mit Hilfe von Skripten generiert, die nach Jobpostings auf [geh
 ## Analyse
 Die Auswertung der Daten wurde mit [pandas](https://pandas.pydata.org) durchgeführt. Darstellungen wurden mit [Matplotlib](https://matplotlib.org) und [Seaborn](https://seaborn.pydata.org) erstellt. Eine Geo-Analyse wurde mit [Geopandas](https://geopandas.org) mit Daten vom [Regionalatlas](https://regionalatlas.statistikportal.de/#) und [opendatasoft](https://public.opendatasoft.com/explore/dataset/georef-germany-postleitzahl) durchgeführt.
 
-Die Analyse ist hier zu finden.
+Die Analyse ist [hier](https://github.com/tim-hilde/Data-Science-Jobs/blob/main/notebooks/02-Analysis.ipynb) zu finden.
