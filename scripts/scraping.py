@@ -15,10 +15,11 @@ search_keywords = [
 ]
 search_url = "https://www.gehalt.de/einkommen/suche/"
 
+
 def next_page():
     global end_reached
     if duplicate_count <= 20 and end_reached is not True:
-		# Überprüfen, ob es einen "Next"-Button gibt
+        # Überprüfen, ob es einen "Next"-Button gibt
         if (
             len(
                 driver.find_elements(
@@ -27,15 +28,15 @@ def next_page():
             )
             > 0
         ):
-			# Scrollen, um den "Next"-Button sichtbar zu machen
+            # Scrollen, um den "Next"-Button sichtbar zu machen
             driver.execute_script(
                 "arguments[0].scrollIntoView();",
                 driver.find_element(
                     By.CSS_SELECTOR, ".next.icon.icon--right.chevron-right"
                 ),
             )
-		
-		# Überprüfen, ob ein Newsletter-Modal angezeigt wird
+
+        # Überprüfen, ob ein Newsletter-Modal angezeigt wird
         if (
             len(driver.find_elements(By.CSS_SELECTOR, ".jobletter.jobletterModal.show"))
             > 0
@@ -45,7 +46,7 @@ def next_page():
                 By.CSS_SELECTOR, ".simplemodal-close.icon.close"
             ).click()
 
-		# Überprüfen, ob "Next"-Button unverfügbar ist
+        # Überprüfen, ob "Next"-Button unverfügbar ist
         if (
             len(
                 driver.find_elements(
@@ -60,6 +61,7 @@ def next_page():
             ).click()
         else:
             end_reached = True
+
 
 # Lese bestehende Daten
 jobs_df = pd.read_pickle("../data/jobs.pkl")
@@ -76,7 +78,6 @@ options.add_argument("--headless")
 with webdriver.Firefox(options=options) as driver:
     wait = WebDriverWait(driver, 20)
     first = True
-
 
     # Durchlaufen der Suchbegriffe
     for keywords in search_keywords:
@@ -120,7 +121,7 @@ with webdriver.Firefox(options=options) as driver:
                 By.CSS_SELECTOR,
                 "#ccmgt_explicit_preferences.privacy-prompt-button.secondary-button.options-button",
             ).click()
-            
+
             # Klicke zweiten Teil des Cookie Banners
             wait.until(
                 lambda driver: len(
@@ -137,18 +138,34 @@ with webdriver.Firefox(options=options) as driver:
             first = False
 
         # Wenn Newsletter-Modal, klicken
-        if len(driver.find_elements(By.CSS_SELECTOR, ".jobletter.jobletterModal.show")) > 0:
-            driver.find_element(By.CSS_SELECTOR, ".simplemodal-close.icon.close").click()
+        if (
+            len(driver.find_elements(By.CSS_SELECTOR, ".jobletter.jobletterModal.show"))
+            > 0
+        ):
+            driver.find_element(
+                By.CSS_SELECTOR, ".simplemodal-close.icon.close"
+            ).click()
 
         # Solange suchen, bis genug Duplikate gefunden oder Ende erreicht ist
         while duplicate_count < 20 and end_reached is not True:
+            wait.until(
+                lambda driver: len(
+                    driver.find_elements(
+                        By.CSS_SELECTOR, "ul#joblist.joblist.copy-default:not(.hidden)"
+                    )
+                )
+                > 0
+            )
+
             response = driver.page_source
             soup_object = BeautifulSoup(response, features="lxml")
 
             joblist_container = soup_object.find_all(
                 id="joblist", class_="joblist copy-default"
             )[0]
-            joblist = joblist_container.find_all("li", attrs={"data-hidesalarydata": True})
+            joblist = joblist_container.find_all(
+                "li", attrs={"data-hidesalarydata": True}
+            )
 
             for job in joblist:
                 link = job.find(class_="jobListLink")["href"]
