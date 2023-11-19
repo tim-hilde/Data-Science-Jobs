@@ -36,16 +36,6 @@ def next_page():
                 ),
             )
 
-        # Überprüfen, ob ein Newsletter-Modal angezeigt wird
-        if (
-            len(driver.find_elements(By.CSS_SELECTOR, ".jobletter.jobletterModal.show"))
-            > 0
-        ):
-            # Schließe Newsletter-Modal
-            driver.find_element(
-                By.CSS_SELECTOR, ".simplemodal-close.icon.close"
-            ).click()
-
         # Überprüfen, ob "Next"-Button unverfügbar ist
         if (
             len(
@@ -55,6 +45,30 @@ def next_page():
             )
             == 0
         ):
+            # Überprüfen, ob ein Newsletter-Modal angezeigt wird
+            if (
+                len(
+                    driver.find_elements(
+                        By.CSS_SELECTOR, ".jobletter.jobletterModal.show"
+                    )
+                )
+                > 0
+            ):
+                # Schließe Newsletter-Modal
+                driver.find_element(
+                    By.CSS_SELECTOR, ".simplemodal-close.icon.close"
+                ).click()
+
+            wait.until(
+                lambda driver: len(
+                    driver.find_elements(
+                        By.CSS_SELECTOR,
+                        ".jobletter.jobletterModal.show",
+                    )
+                )
+                == 0
+            )
+
             # Klicke "Next"- Button
             driver.find_element(
                 By.CSS_SELECTOR, ".next.icon.icon--right.chevron-right"
@@ -88,21 +102,21 @@ with webdriver.Firefox(options=options) as driver:
 
         driver.get(search_url + keywords)
         # Überprüfen, ob es einen "Next"-Button gibt
-        if (
-            len(
-                driver.find_elements(
-                    By.CSS_SELECTOR, ".next.icon.icon--right.chevron-right"
-                )
-            )
-            > 0
-        ):
-            # Scrollen, um den "Next"-Button sichtbar zu machen
-            driver.execute_script(
-                "arguments[0].scrollIntoView();",
-                driver.find_element(
-                    By.CSS_SELECTOR, ".next.icon.icon--right.chevron-right"
-                ),
-            )
+        # if (
+        #     len(
+        #         driver.find_elements(
+        #             By.CSS_SELECTOR, ".next.icon.icon--right.chevron-right"
+        #         )
+        #     )
+        #     > 0
+        # ):
+        #     # Scrollen, um den "Next"-Button sichtbar zu machen
+        #     driver.execute_script(
+        #         "arguments[0].scrollIntoView();",
+        #         driver.find_element(
+        #             By.CSS_SELECTOR, ".next.icon.icon--right.chevron-right"
+        #         ),
+        #     )
 
         # Beim ersten Durchlauf, Cookie Banner schließen
         if first:
@@ -137,14 +151,14 @@ with webdriver.Firefox(options=options) as driver:
             ).click()
             first = False
 
-        # Wenn Newsletter-Modal, klicken
-        if (
-            len(driver.find_elements(By.CSS_SELECTOR, ".jobletter.jobletterModal.show"))
-            > 0
-        ):
-            driver.find_element(
-                By.CSS_SELECTOR, ".simplemodal-close.icon.close"
-            ).click()
+        # # Wenn Newsletter-Modal, klicken
+        # if (
+        #     len(driver.find_elements(By.CSS_SELECTOR, ".jobletter.jobletterModal.show"))
+        #     > 0
+        # ):
+        #     driver.find_element(
+        #         By.CSS_SELECTOR, ".simplemodal-close.icon.close"
+        #     ).click()
 
         # Solange suchen, bis genug Duplikate gefunden oder Ende erreicht ist
         while duplicate_count < 20 and end_reached is not True:
