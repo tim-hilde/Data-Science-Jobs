@@ -5,6 +5,7 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from bs4 import BeautifulSoup
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import TimeoutException
 
 # Konfigurieren des Firefox-Browsers
 options = FirefoxOptions()
@@ -16,10 +17,13 @@ def add_info(url):
     global first
     driver.get(url)
     wait = WebDriverWait(driver, 20)
-    
+
     # Überprüfen, ob die URL von gehalt.de ist
     if "gehalt.de" in url:
-        wait.until(lambda driver: driver.current_url != url)
+        try:
+            wait.until(lambda driver: driver.current_url != url)
+        except TimeoutException:
+            print("Fehlerhafter Link: {}".format(url))
     link = driver.current_url
     if "stepstone.de" not in link:
         return (
@@ -31,8 +35,8 @@ def add_info(url):
             "Nicht stepstone",
             "Nicht stepstone",
         )
-    
-	# Beim ersten Durchlauf, Cookie Banner schließen
+
+    # Beim ersten Durchlauf, Cookie Banner schließen
     if first:
         # Sicherstellen, dass es einen Cookie-Banner gibt
         wait.until(
@@ -63,7 +67,7 @@ def add_info(url):
             By.CSS_SELECTOR, ".secondary-button.ccmgt_reject_button"
         ).click()
         first = False
-	# Überprüfen, dass alle Elemente des Texts verfügbar sind
+    # Überprüfen, dass alle Elemente des Texts verfügbar sind
     if len(driver.find_elements(By.CLASS_NAME, "listing-content-provider-hw0nf9")) > 0:
         driver.find_element(By.CLASS_NAME, "listing-content-provider-hw0nf9").click()
 
@@ -89,7 +93,7 @@ def add_info(url):
     else:
         teilzeit_remote = "-"
 
-	# Informationstexte auslesen
+    # Informationstexte auslesen
     base = soup_object.find_all("div", class_="sc-EHOje jWEhHL")
 
     texts = ["", "", "", "", ""]
@@ -108,7 +112,6 @@ jobs_new = jobs[jobs["Teilzeit_Remote"].isna()]
 index_new = jobs_new.index
 
 with webdriver.Firefox(options=options) as driver:
-
     first = True
     for i in index_new:
         jobs.loc[
@@ -143,6 +146,8 @@ with webdriver.Firefox(options=options) as driver:
                     "Contact",
                 ],
             ] = add_info(jobs_error.loc[i, "Link"])
-        jobs_error = jobs[(jobs["Teilzeit_Remote"] == "-") & (jobs["Introduction"] == "")]
+        jobs_error = jobs[
+            (jobs["Teilzeit_Remote"] == "-") & (jobs["Introduction"] == "")
+        ]
         jobs.to_pickle("../data/jobs.pkl")
         round += 1
