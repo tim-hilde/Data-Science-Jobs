@@ -29,7 +29,7 @@ def zeit_remote(df):
     )
 
 
-def data_science(df):
+def roles(df, categories_reduced=True):
     def role(title):
         data_science_roles = {
             "Management/Teamlead": [
@@ -59,13 +59,14 @@ def data_science(df):
                     return role
         return "Andere"
 
-    return (
-        df.assign(**{"Job Kategorie": lambda _df: _df["Titel"].apply(role)})
-        .loc[
+    returned = df.assign(**{"Job Kategorie": lambda _df: _df["Titel"].apply(role)})
+
+    if categories_reduced:
+        return returned.loc[
             lambda _df: _df["Job Kategorie"].isin(["Data Analyst", "Data Scientist"]), :
-        ]
-        .astype({"Job Kategorie": "category"})
-    )
+        ].astype({"Job Kategorie": "category"})
+    else:
+        return returned.astype({"Job Kategorie": "category"})
 
 
 def remote(df):
@@ -87,7 +88,7 @@ def remote(df):
     return df
 
 
-def prep(df):
+def prep(df, categories_reduced=True):
     return (
         df.assign(
             Gehalt_min=lambda _df: pd.to_numeric(
@@ -102,7 +103,7 @@ def prep(df):
         .drop_duplicates(subset=["Link"])
         .loc[lambda _df: _df["Titel"].apply(check_keyword), :]
         .pipe(zeit_remote)
-        .pipe(data_science)
+        .pipe(lambda _df: roles(_df, categories_reduced=categories_reduced))
         .assign(Junior=lambda _df: _df["Titel"].apply(lambda x: "junior" in x.lower()))
         .astype({"Junior": bool})
         .assign(
