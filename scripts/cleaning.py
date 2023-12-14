@@ -32,13 +32,6 @@ def zeit_remote(df):
 def roles(df, categories_reduced=True):
     def role(title):
         data_science_roles = {
-            "Management/Teamlead": [
-                "manag",
-                "teamlead",
-                "team lead",
-                "head of",
-                "teamleit",
-            ],
             "Praktikum/Student": ["praktik", "student", "studium"],
             "Trainee": ["trainee"],
             "Product Owner": ["product owner"],
@@ -51,6 +44,13 @@ def roles(df, categories_reduced=True):
             "Systemadministrator": ["systemadmin", "system admin"],
             "Datenbank": ["datenbank", "database"],
             "Data Protection": ["protection", "privacy", "datenschutz", "security"],
+            "Management/Teamlead": [
+                "manag",
+                "teamlead",
+                "team lead",
+                "head of",
+                "teamleit",
+            ],
         }
 
         for role, keywords in data_science_roles.items():
@@ -87,8 +87,7 @@ def remote(df):
 
     return df
 
-
-def prep(df, categories_reduced=True):
+def clean(df):
     return (
         df.assign(
             Gehalt_min=lambda _df: pd.to_numeric(
@@ -101,6 +100,12 @@ def prep(df, categories_reduced=True):
             Link=lambda _df: _df["Link"].str.rsplit("?&cid", n=1, expand=True)[0],
         )
         .drop_duplicates(subset=["Link"])
+    )
+
+def prep(df, categories_reduced=True):
+    return (
+        df
+        .pipe(clean)
         .loc[lambda _df: _df["Titel"].apply(check_keyword), :]
         .pipe(zeit_remote)
         .pipe(lambda _df: roles(_df, categories_reduced=categories_reduced))
