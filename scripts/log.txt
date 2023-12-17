@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/Users/tim/Data Science/Projects/Data Science Jobs/scripts/./scraping.py", line 235, in <module>
+    next_page()
+  File "/Users/tim/Data Science/Projects/Data Science Jobs/scripts/./scraping.py", line 62, in next_page
+    wait.until(
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/selenium/webdriver/support/wait.py", line 101, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
