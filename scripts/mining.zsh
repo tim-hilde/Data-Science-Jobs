@@ -12,6 +12,6 @@ cd $BASEDIR
 cd ..
 
 DATUM=$(date +"%d.%m.%Y")
-git add . &>> log.txt
-git commit -a -m "$DATUM Scraping" &>> log.txt
-git push --quiet &>> log.txt
+git add . > /dev/null
+git commit -a -m "$DATUM Scraping" > /dev/null
+git push --quiet > /dev/null
