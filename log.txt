@@ -1,7 +1,0 @@
-[main b4232a5] 17.12.2023 Scraping
- 5 files changed, 14 insertions(+), 5 deletions(-)
- create mode 100644 log.txt
- create mode 100644 scripts/log.txt
-remote: warning: See https://gh.io/lfs for more information.        
-remote: warning: File data/jobs.pkl is 52.35 MB; this is larger than GitHub's recommended maximum file size of 50.00 MB        
-remote: warning: GH001: Large files detected. You may want to try Git Large File Storage - https://git-lfs.github.com.        
