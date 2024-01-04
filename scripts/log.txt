@@ -1,0 +1,2 @@
+The geckodriver version (0.33.0) detected in PATH at /usr/local/bin/geckodriver might not be compatible with the detected firefox version (121.0); currently, geckodriver 0.34.0 is recommended for firefox 121.*, so it is advised to delete the driver in PATH and retry
+The geckodriver version (0.33.0) detected in PATH at /usr/local/bin/geckodriver might not be compatible with the detected firefox version (121.0); currently, geckodriver 0.34.0 is recommended for firefox 121.*, so it is advised to delete the driver in PATH and retry
