@@ -13,6 +13,6 @@ rm log.txt
 cd ..
 
 DATUM=$(date +"%d.%m.%Y")
-git add . &>> scripts/log.txt
+git add . > /dev/null
 git commit -a -m "$DATUM Scraping" &>> scripts/log.txt
 git push --quiet &>> scripts/log.txt
