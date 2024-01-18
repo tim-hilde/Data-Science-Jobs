@@ -1,12 +1,17 @@
 import pandas as pd
 
+def filter(df, filter=True):
 
-def check_keyword(string):
-    for word in ["data", "analy", "daten"]:
-        if word in string.lower():
-            return True
-    return False
+    def check_keyword(string):
+        for word in ["data", "analy", "daten"]:
+            if word in string.lower():
+                return True
+        return False
 
+    if filter:
+        return df.loc[lambda _df: _df["Titel"].apply(check_keyword), :]
+    else:
+        return df
 
 def zeit_remote(df):
     verfügbar = ~df["Teilzeit_Remote"].isin(
@@ -102,11 +107,11 @@ def clean(df):
         .drop_duplicates(subset=["Link"])
     )
 
-def prep(df, categories_reduced=True):
+def prep(df, filtered=True, categories_reduced=True):
     return (
         df
         .pipe(clean)
-        .loc[lambda _df: _df["Titel"].apply(check_keyword), :]
+        .pipe(lambda _df: filter(_df, filter=filtered))
         .pipe(zeit_remote)
         .pipe(lambda _df: roles(_df, categories_reduced=categories_reduced))
         .assign(Junior=lambda _df: _df["Titel"].apply(lambda x: "junior" in x.lower()))
