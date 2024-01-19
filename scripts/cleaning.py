@@ -1,7 +1,12 @@
 import pandas as pd
 
 def filter(df, filter=True):
+    """Filters the DataFrame for jobs that have certain strings in their title columns.
 
+    Args:
+        df (DataFrame): The DataFrame to be filtered.
+        filter (bool, optional): If the DataFrame should be filtered. Defaults to True.
+    """
     def check_keyword(string):
         for word in ["data", "analy", "daten"]:
             if word in string.lower():
@@ -108,6 +113,19 @@ def clean(df):
     )
 
 def prep(df, filtered=True, categories_reduced=True):
+    """Returns a cleaned DataFrame.
+    - dtypes are set
+    - Duplicate links removed
+    - columns for remote/time, junior role and yearly salary columns created
+
+    Args:
+        df (DataFrame): DataFrame
+        filtered (bool, optional): If only relevant jobs will be returned. Defaults to True.
+        categories_reduced (bool, optional): If only Data Science and Data Analysis jobs will be returned. Defaults to True.
+
+    Returns:
+        DataFrame: Cleaned DataFrame
+    """    
     return (
         df
         .pipe(clean)

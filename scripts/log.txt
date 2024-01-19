@@ -1,0 +1,25 @@
+Traceback (most recent call last):
+  File "/Users/tim/Data Science/Projects/Data Science Jobs/scripts/./scraping.py", line 235, in <module>
+    next_page()
+  File "/Users/tim/Data Science/Projects/Data Science Jobs/scripts/./scraping.py", line 75, in next_page
+    ).click()
+      ^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/selenium/webdriver/remote/webelement.py", line 94, in click
+    self._execute(Command.CLICK_ELEMENT)
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/selenium/webdriver/remote/webelement.py", line 395, in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 348, in execute
+    self.error_handler.check_response(response)
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.ElementClickInterceptedException: Message: Element <span class="next icon icon--right chevron-right"> is not clickable at point (768,10) because another element <div class="shader"> obscures it
+Stacktrace:
+RemoteError@chrome://remote/content/shared/RemoteError.sys.mjs:8:8
+WebDriverError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:189:5
+ElementClickInterceptedError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:333:5
+webdriverClickElement@chrome://remote/content/marionette/interaction.sys.mjs:176:11
+interaction.clickElement@chrome://remote/content/marionette/interaction.sys.mjs:135:11
+clickElement@chrome://remote/content/marionette/actors/MarionetteCommandsChild.sys.mjs:204:29
+receiveMessage@chrome://remote/content/marionette/actors/MarionetteCommandsChild.sys.mjs:84:31
+
