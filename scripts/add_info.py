@@ -110,7 +110,7 @@ jobs = pd.read_pickle("../data/jobs.pkl")
 
 jobs_new = jobs[jobs["Teilzeit_Remote"].isna()]
 index_new = jobs_new.index
-
+print(f"Adding info for {jobs_new.shape[0]} jobs.")
 with webdriver.Firefox(options=options) as driver:
     first = True
     for i in index_new:

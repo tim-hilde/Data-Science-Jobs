@@ -7,6 +7,7 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 
+date = datetime.datetime.now().strftime("%d.%m.%Y")
 search_keywords = [
     "junior+data+scientist",
     "junior+data+science",
@@ -235,9 +236,10 @@ with webdriver.Firefox(options=options) as driver:
             next_page()
 
         statistics.loc[ix_stats, ["Date", keywords]] = [
-            datetime.datetime.now().strftime("%d.%m.%Y"),
+            date,
             new_entries,
         ]
 
+print(f"{date}: {new_entries} neue Einträge.")
 jobs_df.to_pickle("../data/jobs.pkl")
 statistics.to_pickle("../data/statistics.pkl")
