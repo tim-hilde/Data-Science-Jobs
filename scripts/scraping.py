@@ -240,6 +240,5 @@ with webdriver.Firefox(options=options) as driver:
             new_entries,
         ]
 
-print(f"{date}: {new_entries} neue Einträge.")
 jobs_df.to_pickle("../data/jobs.pkl")
 statistics.to_pickle("../data/statistics.pkl")
