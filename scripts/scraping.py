@@ -90,6 +90,8 @@ options = FirefoxOptions()
 options.add_argument("--headless")
 # driver = webdriver.Firefox()
 
+print(f"{date}:")
+
 with webdriver.Firefox(options=options) as driver:
     wait = WebDriverWait(driver, 20)
     first = True

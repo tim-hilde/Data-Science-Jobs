@@ -5,11 +5,13 @@ from HanTa import HanoverTagger as ht
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 
+
 nltk.download("punkt")
 nltk.download("stopwords")
 
 with open("../data/stopwords-de.txt", "r") as file:
     stopwords_ger = file.read().split()
+
 
 def tokenize_doc(doc):
     stopwords_en = stopwords.words("english")
