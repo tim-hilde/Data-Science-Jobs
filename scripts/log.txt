@@ -1,2 +1,6 @@
-08.02.2024:
-Adding info for 3 jobs.
+15.02.2024:
+Adding info for 216 jobs.
+Fehlerhafter Link: https://www.gehalt.de/stellenangebote-jobs/detail?jobname=junior%20Data%20Scientist&radius=15&platform=GDE%20E/Suche%20Jobliste&origin=einkommen-suche&searchUUID=9ad51072-5220-4774-a346-c73837c7d7cb&titleRequired=false&showNullSalaries=true&extendedPageSize=20&page=64&size=1&jobId=58578079
+Fehlerhafter Link: https://www.gehalt.de/stellenangebote-jobs/detail?jobname=junior%20Data%20Scientist&radius=15&platform=GDE%20E/Suche%20Jobliste&origin=einkommen-suche&searchUUID=14f29b82-e072-4721-8d20-0603fbd3a1cf&titleRequired=false&showNullSalaries=true&extendedPageSize=20&page=320&size=1&jobId=58555420
+Fehlerhafter Link: https://www.gehalt.de/stellenangebote-jobs/detail?jobname=junior%20Data%20Scientist&radius=15&platform=GDE%20E/Suche%20Jobliste&origin=einkommen-suche&searchUUID=1962dff9-7897-4b57-8a7c-21a51020a289&titleRequired=false&showNullSalaries=true&extendedPageSize=20&page=338&size=1&jobId=58490157
+Fehlerhafter Link: https://www.gehalt.de/stellenangebote-jobs/detail?jobname=junior%20Data%20Scientist&radius=15&platform=GDE%20E/Suche%20Jobliste&origin=einkommen-suche&searchUUID=83629d13-7a5a-4836-81e1-efe9595d4031&titleRequired=false&showNullSalaries=true&extendedPageSize=20&page=345&size=1&jobId=58464620
