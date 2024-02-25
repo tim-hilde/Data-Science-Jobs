@@ -11,7 +11,7 @@ rm log.txt
 /usr/local/bin/python3 "./add_info.py" &>> log.txt
 
 cd ..
-jupyter execute "notebooks/01-Statistics.ipynb" "notebooks/02-Analysis.ipynb" "notebooks/03-Gehalt.ipynb" &>> log.txt
+jupyter nbconvert --to notebook --execute --inplace "notebooks/01-Statistics.ipynb" "notebooks/02-Analysis.ipynb" "notebooks/03-Gehalt.ipynb" &>> scripts/log.txt
 
 DATUM=$(date +"%d.%m.%Y")
 git add . > /dev/null

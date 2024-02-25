@@ -129,9 +129,9 @@ with webdriver.Firefox(options=options) as driver:
         jobs.to_pickle("../data/jobs.pkl")
 
     jobs_error = jobs[(jobs["Teilzeit_Remote"] == "-") & (jobs["Introduction"] == "")]
-
     round = 0
     while len(jobs_error) > 0 and round < 3:
+        print(f"Reducing {len(jobs_error)} error jobs")
         index_err = jobs_error.index
         for i in index_err:
             jobs.loc[

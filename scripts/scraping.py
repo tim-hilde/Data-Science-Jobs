@@ -90,7 +90,8 @@ options = FirefoxOptions()
 options.add_argument("--headless")
 # driver = webdriver.Firefox()
 
-print(f"{date}:")
+print(f"**{date}**")
+print("Started scraping")
 
 with webdriver.Firefox(options=options) as driver:
     wait = WebDriverWait(driver, 20)
@@ -102,7 +103,7 @@ with webdriver.Firefox(options=options) as driver:
         duplicates_found = 0
         duplicate_count = 0
         end_reached = False
-
+        
         driver.get(search_url + keywords)
         # Überprüfen, ob es einen "Next"-Button gibt
         # if (
@@ -234,7 +235,6 @@ with webdriver.Firefox(options=options) as driver:
                 else:
                     duplicate_count += 1
                     duplicates_found += 1
-
             next_page()
 
         statistics.loc[ix_stats, ["Date", keywords]] = [
@@ -244,3 +244,4 @@ with webdriver.Firefox(options=options) as driver:
 
 jobs_df.to_pickle("../data/jobs.pkl")
 statistics.to_pickle("../data/statistics.pkl")
+print("Done scraping")
