@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import WebDriverException
 
 # Konfigurieren des Firefox-Browsers
 options = FirefoxOptions()
@@ -15,7 +16,31 @@ options.add_argument("--headless")
 # Funktion zum Hinzufügen von Informationen zu einem Job-Link
 def add_info(url):
     global first
-    driver.get(url)
+    
+    if "error/code/502" in url:
+        return (
+            url,
+            "Stellenanzeige nicht mehr verfügbar",
+            "Stellenanzeige nicht mehr verfügbar",
+            "Stellenanzeige nicht mehr verfügbar",
+            "Stellenanzeige nicht mehr verfügbar",
+            "Stellenanzeige nicht mehr verfügbar",
+            "Stellenanzeige nicht mehr verfügbar",
+        )
+    try:
+        driver.get(url)
+    except WebDriverException as error:
+        if "Reached error page" in error.msg:
+            print("Error loading page, trying again")
+            return (
+            url,
+            "-",
+            "",
+            "",
+            "",
+            "",
+            "",
+        )
     wait = WebDriverWait(driver, 20)
 
     # Überprüfen, ob die URL von gehalt.de ist
@@ -35,6 +60,17 @@ def add_info(url):
             "Nicht stepstone",
             "Nicht stepstone",
         )
+    elif "error/code/502" in link:
+        return (
+            url,
+            "-",
+            "",
+            "",
+            "",
+            "",
+            "",
+        )
+        
 
     # Beim ersten Durchlauf, Cookie Banner schließen
     if first:
@@ -134,6 +170,8 @@ with webdriver.Firefox(options=options) as driver:
         print(f"Reducing {len(jobs_error)} error jobs")
         index_err = jobs_error.index
         for i in index_err:
+            print(f"Trying error item with index {i}")
+            print(f"Joblink: {jobs_error.loc[i, 'Link']}")
             jobs.loc[
                 i,
                 [
