@@ -31,7 +31,7 @@ def add_info(url):
         driver.get(url)
     except WebDriverException as error:
         if "Reached error page" in error.msg:
-            print("Error loading page, trying again")
+            print("Error loading page")
             return (
             url,
             "-",
@@ -170,8 +170,6 @@ with webdriver.Firefox(options=options) as driver:
         print(f"Reducing {len(jobs_error)} error jobs")
         index_err = jobs_error.index
         for i in index_err:
-            print(f"Trying error item with index {i}")
-            print(f"Joblink: {jobs_error.loc[i, 'Link']}")
             jobs.loc[
                 i,
                 [
