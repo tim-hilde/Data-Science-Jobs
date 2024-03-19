@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import ElementClickInterceptedException
 
 date = datetime.datetime.now().strftime("%d.%m.%Y")
 search_keywords = [
@@ -71,9 +72,12 @@ def next_page():
             )
 
             # Klicke "Next"- Button
-            driver.find_element(
-                By.CSS_SELECTOR, ".next.icon.icon--right.chevron-right"
-            ).click()
+            try:
+                driver.find_element(
+                    By.CSS_SELECTOR, ".next.icon.icon--right.chevron-right"
+                ).click()
+            except ElementClickInterceptedException:
+                print("Error: Element was not clickable.")
         else:
             end_reached = True
 
