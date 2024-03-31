@@ -1,8 +1,10 @@
-**27.03.2024**
+**31.03.2024**
 Started scraping
 Done scraping
-Adding info for 11 jobs.
-Reducing 2 error jobs
+Adding info for 303 jobs.
+Reducing 679 error jobs
+Reducing 22 error jobs
+Reducing 8 error jobs
 [NbConvertApp] Converting notebook notebooks/01-Statistics.ipynb to notebook
 0.00s - Debugger warning: It seems that frozen modules are being used, which may
 0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
@@ -12,16 +14,16 @@ Reducing 2 error jobs
 0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
 0.00s - to python to disable frozen modules.
 0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
-[NbConvertApp] Writing 217502 bytes to notebooks/01-Statistics.ipynb
+[NbConvertApp] Writing 223157 bytes to notebooks/01-Statistics.ipynb
 [NbConvertApp] Converting notebook notebooks/02-Analysis.ipynb to notebook
 0.00s - Debugger warning: It seems that frozen modules are being used, which may
 0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
 0.00s - to python to disable frozen modules.
 0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
-[NbConvertApp] Writing 18007240 bytes to notebooks/02-Analysis.ipynb
+[NbConvertApp] Writing 18050960 bytes to notebooks/02-Analysis.ipynb
 [NbConvertApp] Converting notebook notebooks/03-Gehalt.ipynb to notebook
 0.00s - Debugger warning: It seems that frozen modules are being used, which may
 0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
 0.00s - to python to disable frozen modules.
 0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
-[NbConvertApp] Writing 537269 bytes to notebooks/03-Gehalt.ipynb
+[NbConvertApp] Writing 542063 bytes to notebooks/03-Gehalt.ipynb
