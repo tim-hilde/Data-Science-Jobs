@@ -1,28 +1,40 @@
-**04.04.2024**
+**26.04.2024**
 Started scraping
-Error: Element was not clickable.
 Done scraping
-Adding info for 15 jobs.
-Reducing 5 error jobs
-[NbConvertApp] Converting notebook notebooks/01-Statistics.ipynb to notebook
-0.00s - Debugger warning: It seems that frozen modules are being used, which may
-0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
-0.00s - to python to disable frozen modules.
-0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
-0.00s - Debugger warning: It seems that frozen modules are being used, which may
-0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
-0.00s - to python to disable frozen modules.
-0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
-[NbConvertApp] Writing 224552 bytes to notebooks/01-Statistics.ipynb
-[NbConvertApp] Converting notebook notebooks/02-Analysis.ipynb to notebook
-0.00s - Debugger warning: It seems that frozen modules are being used, which may
-0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
-0.00s - to python to disable frozen modules.
-0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
-[NbConvertApp] Writing 18057022 bytes to notebooks/02-Analysis.ipynb
-[NbConvertApp] Converting notebook notebooks/03-Gehalt.ipynb to notebook
-0.00s - Debugger warning: It seems that frozen modules are being used, which may
-0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
-0.00s - to python to disable frozen modules.
-0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
-[NbConvertApp] Writing 544689 bytes to notebooks/03-Gehalt.ipynb
+Adding info for 0 jobs.
+Reducing 1002 error jobs
+Traceback (most recent call last):
+  File "/Users/tim/Data Science/Projects/Data Science Jobs/scripts/./add_info.py", line 184, in <module>
+    ] = add_info(jobs_error.loc[i, "Link"])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tim/Data Science/Projects/Data Science Jobs/scripts/./add_info.py", line 78, in add_info
+    wait.until(
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/selenium/webdriver/support/wait.py", line 105, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+[NbConvertApp] WARNING | Config option `template_path` not recognized by `NotebookExporter`.
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/bin/jupyter-nbconvert", line 8, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/jupyter_core/application.py", line 283, in launch_instance
+    super().launch_instance(argv=argv, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/traitlets/config/application.py", line 1075, in launch_instance
+    app.start()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/nbconvert/nbconvertapp.py", line 420, in start
+    self.convert_notebooks()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/nbconvert/nbconvertapp.py", line 586, in convert_notebooks
+    self.exporter = cls(config=self.config)
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/nbconvert/exporters/exporter.py", line 123, in __init__
+    self._init_preprocessors()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/nbconvert/exporters/exporter.py", line 294, in _init_preprocessors
+    self.register_preprocessor(preprocessor, enabled=True)
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/nbconvert/exporters/exporter.py", line 253, in register_preprocessor
+    preprocessor_cls = import_item(preprocessor)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/traitlets/utils/importstring.py", line 33, in import_item
+    module = __import__(package, fromlist=[obj])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'jupyter_contrib_nbextensions'
