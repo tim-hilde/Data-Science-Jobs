@@ -112,6 +112,34 @@ def clean(df):
         .drop_duplicates(subset=["Link"])
     )
 
+def transform_text(text):
+    """Splits falsely concatened words like "StatistikErfahrung"
+
+    Args:
+        text (Str): Input text
+
+    Returns:
+        Str: Transformed text
+    """
+
+    lower = False
+    new_string = ""
+    for c in text:
+        if c == "\n":
+            new_string += " "
+        elif lower and c.isupper():
+            new_string += " " + c
+            lower = False
+        elif c.islower():
+            new_string += c
+            lower = True
+
+        else:
+            new_string += c
+            lower = False
+    return new_string
+
+
 def prep(df, filtered=True, categories_reduced=True):
     """Returns a cleaned DataFrame.
     - dtypes are set
@@ -125,7 +153,7 @@ def prep(df, filtered=True, categories_reduced=True):
 
     Returns:
         DataFrame: Cleaned DataFrame
-    """    
+    """
     return (
         df
         .pipe(clean)
@@ -139,8 +167,11 @@ def prep(df, filtered=True, categories_reduced=True):
             Gehalt_max_yearly=lambda _df: _df["Gehalt_max"] * 12,
             Gehalt_durchschnitt_yearly=lambda _df: (
                 _df["Gehalt_min_yearly"] + _df["Gehalt_max_yearly"]
-            )
-            / 2,
+            )/ 2,
+            Introduction = lambda _df: _df["Introduction"].apply(transform_text),
+            Description = lambda _df: _df["Description"].apply(transform_text),
+            Profile = lambda _df: _df["Profile"].apply(transform_text),
+            We_offer = lambda _df: _df["We_offer"].apply(transform_text),
         )
         .pipe(remote)
     )
