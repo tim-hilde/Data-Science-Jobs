@@ -16,8 +16,9 @@ options.add_argument("--headless")
 # Funktion zum Hinzufügen von Informationen zu einem Job-Link
 def add_info(url):
     global first
-    
+
     if "error/code/502" in url:
+        print("Error loading page: Stellenanzeige nicht mehr verfügbar")
         return (
             url,
             "Stellenanzeige nicht mehr verfügbar",
@@ -31,7 +32,7 @@ def add_info(url):
         driver.get(url)
     except WebDriverException as error:
         if "Reached error page" in error.msg:
-            print("Error loading page")
+            print(f"Error loading page: {url}")
             return (
             url,
             "-",
@@ -51,6 +52,7 @@ def add_info(url):
             print("Fehlerhafter Link: {}".format(url))
     link = driver.current_url
     if "stepstone.de" not in link:
+        print(f"Error loading page: Not stepstone")
         return (
             link,
             "Nicht stepstone",
@@ -61,6 +63,7 @@ def add_info(url):
             "Nicht stepstone",
         )
     elif "error/code/502" in link:
+        print(f"Error loading page: {url}")
         return (
             url,
             "-",
@@ -70,7 +73,7 @@ def add_info(url):
             "",
             "",
         )
-        
+
 
     # Beim ersten Durchlauf, Cookie Banner schließen
     if first:
@@ -111,6 +114,7 @@ def add_info(url):
     soup_object = BeautifulSoup(response, features="lxml")
     # Wenn Stellenanzeige nicht mehr verfügbar ist
     if len(soup_object.find_all(attrs={"data-genesis-element": "ALERT_CONTENT"})) > 0:
+        print("Stellenanzeige nicht mehr verfügbar")
         return (
             link,
             "Stellenanzeige nicht mehr verfügbar",
